@@ -40,7 +40,7 @@ int is_valid_elf(Elfheader *target_header)
 
 void header_info(Elfheader *target_header)
 {
-    
+    printf("Architecture[32bit(1)/64bit(2)]: %d", (int)target_header->architecture_format);
 }
 
 int main(int argc, char *argv[])
