@@ -5,6 +5,7 @@
 typedef struct {
     unsigned char magicbytes[4];
     unsigned char architecture_format;
+    unsigned char architecture_endian;
 
 }Elfheader;
 
@@ -40,7 +41,9 @@ int is_valid_elf(Elfheader *target_header)
 
 void header_info(Elfheader *target_header)
 {
-    printf("Architecture[32bit(1)/64bit(2)]: %d", (int)target_header->architecture_format);
+    printf("INFO_ARCHITECTURE: \n");
+    printf("format[32bit(1)/64bit(2)]: %d\n", (int)target_header->architecture_format);
+    printf("endian[lil(1)/big(2)]: %d\n", (int)target_header->architecture_endian);
 }
 
 int main(int argc, char *argv[])
