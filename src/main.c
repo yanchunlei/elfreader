@@ -38,6 +38,11 @@ int is_valid_elf(Elfheader *target_header)
     }
 }
 
+void header_info(Elfheader *target_header)
+{
+    
+}
+
 int main(int argc, char *argv[])
 {
     FILE *target;
@@ -52,6 +57,7 @@ int main(int argc, char *argv[])
     Elfheader *target_header = read_elfheader(target);
 
     if(is_valid_elf(target_header)) sentinel("invalid elf header.");
+    header_info(target_header);
 
     free(target_header);
     fclose(target);
