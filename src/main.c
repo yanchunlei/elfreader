@@ -1,12 +1,13 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "dbg.h"
 
 typedef struct {
-    unsigned char magicbytes[3];
+    unsigned char magicbytes[4];
 
 }Elfheader;
 
-Elfheader *Read_elfheader(FILE *target)
+Elfheader *read_elfheader(FILE *target)
 {
     Elfheader *target_header = malloc(sizeof(Elfheader));
     check(target_header, "can not allocate memory for Elfheader");
@@ -17,6 +18,24 @@ error:
     if(target_header) free(target_header);
     return NULL;
 };
+
+int is_valid_elf(Elfheader *target_header)
+{
+    unsigned char temp[4];
+    temp[0] = 0x7F; temp[1] = 'E';
+    temp[2] = 'L'; temp[3] = 'F';
+
+    int result = memcmp(target_header->magicbytes, temp, 4);
+
+    if(result == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -29,10 +48,16 @@ int main(int argc, char *argv[])
     target = fopen(argv[1], "r");
     check(target, "can not open file.");
 
-    Elfheader *target_header = Read_elfheader(target);
+    Elfheader *target_header = read_elfheader(target);
 
+    if(is_valid_elf(target_header)) sentinel("invalid elf header.");
+
+    free(target_header);
+    fclose(target);
     return 0;
+
 error:
+    if(target_header) free(target_header);
     if(target) fclose(target);
     return -1;
 }
