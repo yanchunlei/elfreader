@@ -4,6 +4,7 @@
 
 typedef struct {
     unsigned char magicbytes[4];
+    unsigned char architecture_format;
 
 }Elfheader;
 
