@@ -1,7 +1,7 @@
 # elfreader
 
 ## Description
-A tool that can read out information from binary files in the elf format.
+A tool that can read out header information from binary files in the elf format.
 
 ## Usage
 ```
