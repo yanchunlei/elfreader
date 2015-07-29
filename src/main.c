@@ -2,12 +2,20 @@
 #include "dbg.h"
 
 typedef struct {
+    unsigned char magicbytes[3];
 
 }Elfheader;
 
 Elfheader *Read_elfheader(FILE *target)
 {
-    return NULL;   
+    Elfheader *target_header = malloc(sizeof(Elfheader));
+    check(target_header, "can not allocate memory for Elfheader");
+    fread(target_header, sizeof(Elfheader), 1, target);
+
+    return target_header;
+error:
+    if(target_header) free(target_header);
+    return NULL;
 };
 
 int main(int argc, char *argv[])
